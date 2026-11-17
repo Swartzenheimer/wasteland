@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wasteland | 1x PVE Rust Server | Purge Nights</title>
+<meta name="description" content="Vanilla 1x PVE Rust server with a Purge every 3-4 hours. Talking NPCs, hireable companions, solo friendly. Monthly wipe.">
+<meta property="og:title" content="The Wasteland | 1x PVE | Purge Nights">
+<meta property="og:description" content="Vanilla 1x PVE Rust server with a Purge every 3-4 hours. Talking NPCs, hireable companions, solo friendly.">
+<meta property="og:image" content="banner.png">
+<link rel="icon" href="logo.png">
+<style>
+  :root { --bg: #0d0806; --panel: #1a0f0b; --line: #3a1f14; --text: #f2e6d8; --dim: #b9a796; --orange: #ff7a1a; --cream: #fff3e0; --red: #e0402a; --green: #49c47a; }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: Bahnschrift, "Segoe UI", system-ui, sans-serif; font-size: 17px; line-height: 1.55; }
+  a { color: var(--orange); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  header { border-bottom: 3px solid var(--orange); background: #000; }
+  header img { display: block; width: 100%; max-width: 960px; margin: 0 auto; height: auto; }
+  .join { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; padding: 22px 0 8px; }
+  .btn { display: inline-block; padding: 12px 22px; border: 2px solid var(--orange); background: var(--orange); color: #1a0904; font-weight: 700; letter-spacing: 1px;
+         text-decoration: none; text-transform: uppercase; cursor: pointer; font: inherit; font-weight: 700; }
+  .btn.ghost { background: transparent; color: var(--orange); }
+  .btn:hover { filter: brightness(1.15); }
+  code.cmd { display: inline-block; padding: 11px 14px; background: var(--panel); border: 1px solid var(--line); color: var(--cream); font-size: 16px; }
+  .note { text-align: center; color: var(--dim); font-size: 14px; margin: 4px 0 0; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 26px 0 8px; }
+  .fact { background: var(--panel); border: 1px solid var(--line); padding: 12px; text-align: center; }
+  .fact b { display: block; font-family: Impact, Bahnschrift, sans-serif; font-weight: 400; font-size: 26px; color: var(--orange); letter-spacing: 1px; line-height: 1.1; }
+  .fact span { color: var(--dim); font-size: 14px; }
+  h2 { font-family: Impact, Bahnschrift, sans-serif; font-weight: 400; letter-spacing: 2px; font-size: 34px; color: var(--cream); margin: 46px 0 10px; }
+  h2 small { font-family: Bahnschrift, sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--orange); margin-left: 8px; vertical-align: middle; }
+  .purge { background: linear-gradient(90deg, #3a0d08, #1a0a07); border: 1px solid #6a1b10; border-left: 6px solid var(--red); padding: 18px 20px; }
+  .purge p { margin: 0 0 8px; } .purge p:last-child { margin: 0; }
+  .timeline { display: flex; margin: 14px 0 4px; height: 30px; font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+  .timeline div { display: flex; align-items: center; justify-content: center; color: #fff; white-space: nowrap; overflow: hidden; }
+  .t-pve { background: #1f5a37; flex: 5; } .t-warn { background: #b8650f; flex: 0.6; } .t-purge { background: var(--red); flex: 1.6; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); padding: 16px 18px; }
+  .card h3 { margin: 0 0 4px; color: var(--cream); font-size: 19px; }
+  .card .role { color: var(--orange); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+  .card p { margin: 8px 0 0; color: var(--dim); font-size: 15px; }
+  .card .price { float: right; color: var(--cream); font-weight: 700; font-size: 14px; }
+  ul.list { margin: 0; padding-left: 20px; } ul.list li { margin: 4px 0; }
+  .cmds { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; }
+  .cmds code { color: var(--orange); }
+  footer { margin: 56px 0 0; padding: 22px 0 30px; border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; text-align: center; }
+  #copied { visibility: hidden; color: var(--green); font-size: 14px; }
+  @media (max-width: 560px) { h2 { font-size: 28px; } .t-warn { flex: 1.3; } .t-purge { flex: 1.8; } .cmds { grid-template-columns: 1fr; gap: 0 0; } .cmds span { margin-bottom: 8px; } }
+</style>
+</head>
+<body>
+<header><img src="banner.png" alt="The Wasteland: 1x PVE Rust server with Purge nights" width="1024" height="512"></header>
+
+<main class="wrap">
+  <div class="join">
+    <a class="btn" href="steam://connect/72.241.76.123:28015">Join server</a>
+    <code class="cmd" id="cmd">client.connect 72.241.76.123:28015</code>
+    <button class="btn ghost" id="copy">Copy</button>
+    <span id="copied">Copied</span>
+  </div>
+  <p class="note">"Join server" opens Rust through Steam. Or press F1 in game and paste the command.</p>
+
+  <div class="facts">
+    <div class="fact"><b>1x</b><span>Vanilla rates</span></div>
+    <div class="fact"><b>PVE</b><span>Most of the time</span></div>
+    <div class="fact"><b>80 MIN</b><span>Purge every 3-4 hrs</span></div>
+    <div class="fact"><b>MONTHLY</b><span>Map + BP wipe</span></div>
+    <div class="fact"><b id="wipe">-</b><span>Next wipe</span></div>
+  </div>
+
+  <h2>THE PURGE</h2>
+  <div class="purge">
+    <p>PVE by default. No raiding, no PVP, nobody offlining you while you're at work.</p>
+    <p>Every 3-4 hours the sirens go off. 5 minutes to get home. Then 80 minutes of PVP, raiding and looting, anything goes. Once it's over, it's back to PVE.</p>
+    <div class="timeline"><div class="t-pve">PVE</div><div class="t-warn">SIRENS</div><div class="t-purge">PURGE</div></div>
+    <p style="color:var(--dim);font-size:14px">Type <code>/purge</code> in game to see how long until the next one.</p>
+  </div>
+
+  <h2>NPCs THAT TALK</h2>
+  <div class="grid">
+    <div class="card"><h3>Roaming gangs</h3><p>Bandit and scientist gangs roam the map. They fight each other, hunt players, and talk trash as they close in. Hostile NPCs drop scrap.</p></div>
+    <div class="card"><h3>Bandit strongholds</h3><p>Raidable NPC bases spawn around the map, even outside the Purge. Bring explosives for the locked doors. Tougher bases, better loot.</p></div>
+    <div class="card"><h3>Settler camps</h3><p>Camps along the roads, marked on your map. Each settler gives you a free gift once a day. Shoot one and the whole camp comes after you.</p></div>
+    <div class="card"><h3>The Juggernaut</h3><p>Something big walks the wasteland. It carries up to 100 scrap if you can put it down.</p></div>
+  </div>
+
+  <h2>HIRE A COMPANION <small>NEW</small></h2>
+  <p style="color:var(--dim);margin-top:0">Six fully voiced mercenaries wait at the settler camps. Walk up, press E, pay in scrap. They follow you, fight, carry loot in their pack, revive you when you go down and level up the longer you keep them. Treat them well and they turn loyal and unlock a perk.</p>
+  <div class="grid">
+    <div class="card"><span class="price">50 scrap</span><h3>Barnaby</h3><div class="role">The Town Drunk</div><p>Fights with a guitar. Hostiles near him are too busy with his insults to aim at you properly.</p></div>
+    <div class="card"><span class="price">400 scrap</span><h3>Pip</h3><div class="role">The Scavenger</div><p>Finds extra scrap in crates you open while she's nearby.</p></div>
+    <div class="card"><span class="price">400 scrap</span><h3>Cole</h3><div class="role">The Hunter</div><p>Bolt-action rifle. More meat, leather and fat from animals you harvest.</p></div>
+    <div class="card"><span class="price">750 scrap</span><h3>Mags</h3><div class="role">The Gunner</div><p>Ex-militia with a Thompson. Steady covering fire, hard to put down.</p></div>
+    <div class="card"><span class="price">750 scrap</span><h3>Doc Ivy</h3><div class="role">The Medic</div><p>Heals you when you're hurt and gets you up when you're downed.</p></div>
+    <div class="card"><span class="price">1200 scrap</span><h3>Kessler</h3><div class="role">The Veteran</div><p>Ex-scientist merc. Best aim and armour of the lot, calls out threats.</p></div>
+  </div>
+
+  <h2>SOLO FRIENDLY</h2>
+  <ul class="list">
+    <li>Tuned for low pop. Power plant fuses decay much slower when only a few players are online.</li>
+    <li>Loot from heli and Bradley is locked to whoever did the most damage.</li>
+    <li>Settler gifts, NPC scrap drops and a companion help you get going alone.</li>
+  </ul>
+
+  <h2>RULES</h2>
+  <ul class="list">
+    <li>Be respectful. No harassment, hate speech or spam.</li>
+    <li>Don't build to block monuments, roads or other players' bases.</li>
+    <li>Don't exploit bugs. Report them to an admin.</li>
+    <li>Outside the Purge, players and bases are protected. During the Purge, anything goes.</li>
+    <li>Bases decay like vanilla. Keep your TC stocked.</li>
+    <li>Map and blueprints wipe on the first Thursday of every month.</li>
+  </ul>
+
+  <h2>USEFUL COMMANDS</h2>
+  <div class="cmds">
+    <code>/help</code><span>Everything you can do</span>
+    <code>/purge</code><span>Time until the next Purge (/purge hud for an on-screen timer)</span>
+    <code>/companion</code><span>Orders, pack, talk and renew for your hired companion</span>
+    <code>/trade NAME</code><span>Trade items with another player</span>
+    <code>/friend add NAME</code><span>Add a friend so your doors and turrets trust them</span>
+    <code>/remove</code><span>Remove your own building pieces</span>
+    <code>/up 2|3|4</code><span>Upgrade the whole building you're looking at</span>
+  </div>
+</main>
+
+<footer class="wrap">THE WASTELAND &middot; Rust server &middot; 72.241.76.123:28015<br>Not affiliated with Facepunch Studios.</footer>
+
+<script>
+  // Next forced wipe: first Thursday of the month (Facepunch updates ~2pm US Eastern)
+  (function () {
+    const now = new Date();
+    function firstThu(y, m) { const d = new Date(y, m, 1); d.setDate(1 + ((4 - d.getDay() + 7) % 7)); return d; }
+    let w = firstThu(now.getFullYear(), now.getMonth());
+    const end = new Date(w); end.setDate(end.getDate() + 1);
+    if (now >= end) w = firstThu(now.getFullYear(), now.getMonth() + 1);
+    document.getElementById('wipe').textContent = w.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }).toUpperCase();
+  })();
+  document.getElementById('copy').addEventListener('click', function () {
+    const t = document.getElementById('cmd').textContent;
+    const done = () => { const c = document.getElementById('copied'); c.style.visibility = 'visible'; setTimeout(() => c.style.visibility = 'hidden', 1500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(done).catch(() => {});
+  });
+</script>
+</body>
+</html>
